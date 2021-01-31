@@ -1,11 +1,10 @@
 import React from 'react'
+import Registration from './components/Registration'
+import './styles/App.css'
+import './styles/Registration.css'
 
 const App = () => {
-  return (
-    <div className='container'>
-      <div>something</div>
-    </div>
-  )
+  return <Registration />
 }
 
 export default App
