@@ -1,40 +1,36 @@
-require('dotenv').config()
+require('dotenv').config() // allows environment variable to be used
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
-
-const url = process.env.TEST_MONGODB_URI
-
-// connect to database
-mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  })
-  .then((result) => {
-    console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message)
-  })
-
-// define a schema
-const userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  date: Date,
-  important: Boolean,
-})
-
-//"User" model becomes "users" collection in mongodb
-const User = mongoose.model('User', userSchema)
+const User = require('./models/user') //"User" model becomes "users" collection in mongodb
 
 // render users from database to browser
 app.get('/api/users', (request, response) => {
   User.find({}).then((users) => {
     response.json(users)
+  })
+})
+
+app.use(express.json()) // parse request.body to json, important middleware
+
+// create user with express.post() method
+app.post('/api/users', (request, response) => {
+  const body = request.body
+
+  if (body.username === undefined) {
+    return response.status(400).json({ error: 'Content missing' })
+  }
+
+  // create user
+  const user = new User({
+    username: body.username,
+    password: body.password,
+    date: new Date(),
+    important: true,
+  })
+
+  // save user
+  user.save().then((savedUser) => {
+    response.json(savedUser)
   })
 })
 
