@@ -2,6 +2,7 @@ require('dotenv').config() // allows environment variable to be used
 const express = require('express')
 const app = express()
 const User = require('./models/user') //"User" model becomes "users" collection in mongodb
+const loginRouter = require('./controllers/login')
 
 // render users from database to browser
 app.get('/api/users', (request, response) => {
@@ -33,6 +34,8 @@ app.post('/api/users', (request, response) => {
     response.json(savedUser)
   })
 })
+
+app.use('/api/login', loginRouter)
 
 // express app.listen() allows port to open on browser
 const PORT = process.env.PORT
