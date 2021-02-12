@@ -1,10 +1,10 @@
 import React from 'react'
-import Registration from './components/Registration'
+import RegistrationPage from './components/RegistrationPage'
 import './styles/App.css'
 import './styles/Registration.css'
 
 const App = () => {
-  return <Registration />
+  return <RegistrationPage />
 }
 
 export default App
