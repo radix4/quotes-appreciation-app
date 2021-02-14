@@ -3,7 +3,7 @@ const loginRouter = require('express').Router()
 const User = require('../models/user')
 
 loginRouter.post('/', async (request, response) => {
-  console.log('am i here?')
+  console.log('trying to login..')
   const body = request.body
 
   // find user with same user name
@@ -11,6 +11,9 @@ loginRouter.post('/', async (request, response) => {
 
   // check for matching passwords
   let passwordCorrect = false
+
+  console.log(body)
+  console.log('user password: ', user.password)
 
   if (body.password === user.password) {
     passwordCorrect = true

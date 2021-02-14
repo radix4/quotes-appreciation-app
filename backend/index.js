@@ -1,6 +1,9 @@
 require('dotenv').config() // allows environment variable to be used
 const express = require('express')
 const app = express()
+const cors = require('cors')
+app.use(cors())
+
 const User = require('./models/user') //"User" model becomes "users" collection in mongodb
 const loginRouter = require('./controllers/login')
 

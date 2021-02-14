@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import background from '../images/login.png'
+import loginService from '../services/login'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
 
   const leftCol = {
     padding: '30%',
@@ -22,13 +24,30 @@ const LoginPage = () => {
     setPassword(event.target.value)
   }
 
+  const handleLogin = async (event) => {
+    event.preventDefault()
+
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      })
+      setUser(user)
+      setUsername('')
+      setPassword('')
+      console.log('logged in')
+    } catch (exception) {
+      console.log('wrong credentials')
+    }
+  }
+
   return (
     <Container style={container} fluid>
       <Row className='align-items-center'>
         <Col md={4}>
           <Row style={leftCol}>
             <h2>Login</h2>
-            <Form>
+            <Form onSubmit={handleLogin}>
               {/* =============USERNAME============= */}
               <Form.Group
                 as={Row}
