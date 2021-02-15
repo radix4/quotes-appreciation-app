@@ -28,13 +28,11 @@ const LoginPage = () => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({
-        username,
-        password,
-      })
+      const user = await loginService.login({ username, password })
       setUser(user)
       setUsername('')
       setPassword('')
+
       console.log('logged in')
     } catch (exception) {
       console.log('wrong credentials')
