@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import RegistrationPage from './RegistrationPage'
 import background from '../images/login.png'
 import loginService from '../services/login'
 
@@ -79,10 +81,12 @@ const LoginPage = () => {
                 </Col>
               </Form.Group>
             </Form>
+            {/* ===============LINK================ */}
             Don't have an account?
-            <a href='#'>Create an account</a>
+            <Link to='/registration'>Create an account</Link>
           </Row>
         </Col>
+        {/* =================LEFT COLUMN================ */}
         <Col md={8} className='left-col'>
           <Image className='background-img' src={background}></Image>
         </Col>

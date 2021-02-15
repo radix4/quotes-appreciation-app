@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import background from '../images/registration.png'
 import userService from '../services/users'
 
@@ -70,7 +71,6 @@ const RegistrationPage = ({ createUser }) => {
                   <Form.Control type='text' placeholder='Username' />
                 </Col>
               </Form.Group>
-
               {/* =============PASSWORD============= */}
               <Form.Group
                 as={Row}
@@ -83,13 +83,14 @@ const RegistrationPage = ({ createUser }) => {
                   <Form.Control type='password' placeholder='Password' />
                 </Col>
               </Form.Group>
-
               {/* =============SUBMIT============= */}
               <Form.Group as={Row}>
                 <Col md={{ span: 10, offset: 4 }}>
                   <Button type='submit'>Register</Button>
                 </Col>
               </Form.Group>
+              <>Have an account? </>
+              <Link to='/'> Back to Login</Link>
             </Form>
           </Row>
         </Col>
