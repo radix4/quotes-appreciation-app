@@ -20,6 +20,8 @@ app.use(express.json()) // parse request.body to json, important middleware
 app.post('/api/users', (request, response) => {
   const body = request.body
 
+  console.log(body)
+
   if (body.username === undefined) {
     return response.status(400).json({ error: 'Content missing' })
   }
@@ -28,8 +30,6 @@ app.post('/api/users', (request, response) => {
   const user = new User({
     username: body.username,
     password: body.password,
-    date: new Date(),
-    important: true,
   })
 
   // save user

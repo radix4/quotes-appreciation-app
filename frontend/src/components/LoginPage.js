@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import RegistrationPage from './RegistrationPage'
 import background from '../images/login.png'
 import loginService from '../services/login'
 
@@ -35,6 +34,8 @@ const LoginPage = () => {
       setUsername('')
       setPassword('')
 
+      document.getElementById('login-form').reset()
+
       console.log('logged in')
     } catch (exception) {
       console.log('wrong credentials')
@@ -47,7 +48,7 @@ const LoginPage = () => {
         <Col md={4}>
           <Row style={leftCol}>
             <h2>Login</h2>
-            <Form onSubmit={handleLogin}>
+            <Form id='login-form' onSubmit={handleLogin}>
               {/* =============USERNAME============= */}
               <Form.Group
                 as={Row}

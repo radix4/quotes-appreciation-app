@@ -13,9 +13,11 @@ loginRouter.post('/', async (request, response) => {
   let passwordCorrect = false
 
   console.log(body)
-  console.log('user password: ', user.password)
 
-  if (body.password === user.password) {
+  // error checking when db could not find a match
+  if (user === null) {
+    passwordCorrect = false
+  } else if (body.password === user.password) {
     passwordCorrect = true
   }
 

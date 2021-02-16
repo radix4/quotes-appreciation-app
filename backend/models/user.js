@@ -17,10 +17,14 @@ mongoose
 
 // define a schema
 const userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  date: Date,
-  important: Boolean,
+  username: {
+    type: String,
+    required: [true, 'Your username cannot be blank.'],
+  },
+  password: {
+    type: String,
+    required: [true, 'Your password cannot be blank.'],
+  },
 })
 
 // this reformats mongo's id and versioning field
