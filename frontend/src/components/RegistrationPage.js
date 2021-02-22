@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import background from '../images/registration.png'
 import userService from '../services/users'
 
-const RegistrationPage = ({ createUser }) => {
+const RegistrationPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 

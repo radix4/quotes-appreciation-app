@@ -1,0 +1,13 @@
+.animated {
+  -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.jumbotron .bg-overlay {
+  background: rgba(0, 0, 0, 0);
+}
+
+.jumbotron:hover .bg-overlay {
+  transform: scale(1.1);
+}
