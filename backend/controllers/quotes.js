@@ -32,7 +32,7 @@ quotesRouter.post('/', async (request, response) => {
   const user = await User.findById(decodedToken.id)
 
   const quote = new Quote({
-    content: body.content,
+    content: body.quote,
     author: body.author,
     date: new Date(),
     user: user._id,
@@ -41,7 +41,6 @@ quotesRouter.post('/', async (request, response) => {
   const savedQuote = await quote.save()
   user.quotes = user.quotes.concat(savedQuote._id)
   await user.save()
-
   response.json(savedQuote.toJSON())
 })
 

@@ -1,22 +1,23 @@
-/* This module is responsible for sending requests to the server */
 import axios from 'axios'
-const baseUrl = '/api/users'
+const baseUrl = '/api/quotes'
 
 // token is a private variable
 let token = null
 
 // token's value can be changed
 const setToken = (newToken) => {
+  console.log('new token: ', newToken)
   token = `bearer ${newToken}`
 }
 
-const getAllQuotes = () => {
+const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then((response) => response.data)
 }
 
-// create users
+// create quotes
 const create = async (newObject) => {
+  console.log('new Object: ', newObject)
   const config = {
     headers: { Authorization: token }, // token is set to Authorization
   }
@@ -26,4 +27,4 @@ const create = async (newObject) => {
   return response.data
 }
 
-export default { create, setToken, getAllQuotes }
+export default { setToken, getAll, create }

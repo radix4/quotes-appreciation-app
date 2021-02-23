@@ -7,7 +7,6 @@ loginRouter.post('/', async (request, response) => {
   const body = request.body
 
   const user = await User.findOne({ username: body.username }) // find user with same user name
-  console.log('found..')
 
   let passwordCorrect = false // check for matching passwords
 
@@ -25,6 +24,8 @@ loginRouter.post('/', async (request, response) => {
       error: 'invalid username or password',
     })
   }
+
+  console.log('logged in...!')
 
   // generate token for user
   const userForToken = {

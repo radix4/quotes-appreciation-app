@@ -1,15 +1,7 @@
 import React, { useState } from 'react'
-import {
-  Col,
-  Row,
-  Container,
-  Image,
-  Form,
-  Button,
-  Table,
-  Jumbotron,
-} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import Quote from './Quote'
+import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
+import quotesService from '../services/quotes'
 
 const containerStyle = {
   backgroundColor: '#c7f1f2',
@@ -31,6 +23,36 @@ const quotesHeader = {
 }
 
 const MainPage = () => {
+  const [quote, setQuote] = useState('')
+  const [author, setAuthor] = useState('')
+
+  const handleQuoteChange = (event) => {
+    setQuote(event.target.value)
+  }
+
+  const handleAuthorChange = (event) => {
+    setAuthor(event.target.value)
+  }
+
+  const saveQuote = (event) => {
+    event.preventDefault()
+
+    const newQuote = {
+      quote: quote,
+      author: author,
+    }
+
+    quotesService.create(newQuote).then((returnedQuote) => {
+      console.log('create new quote success!')
+    })
+
+    setQuote('')
+    setAuthor('')
+
+    // clear react bootstrap form
+    document.getElementById('create-quote-form').reset()
+  }
+
   return (
     <Container style={containerStyle} fluid>
       <Row>
@@ -46,21 +68,15 @@ const MainPage = () => {
           </Row>
           <Row as={Col}>
             <Col style={{ margin: '10%' }}>
-              <Jumbotron className='jumbotron'>
-                <div className='bg-overlay animated'>
-                  <p>
-                    "This is a simple hero unit, a simple jumbotron-style
-                    component for calling extra attention to featured content or
-                    information."
-                  </p>
-                  <h3 className='text-right'>Jiro Ono</h3>
-                </div>
-              </Jumbotron>
+              <Quote />
               <Jumbotron>
-                <Form>
-                  {/* =============USERNAME============= */}
+                <Form id='create-quote-form' onSubmit={saveQuote}>
+                  {/* =============QUOTES INPUT============= */}
 
-                  <Form.Group as={Row} controlId='exampleForm.ControlTextarea1'>
+                  <Form.Group
+                    as={Row}
+                    controlId='quotes-text'
+                    onChange={handleQuoteChange}>
                     <Form.Label column md={2}>
                       Quotes
                     </Form.Label>
@@ -73,8 +89,11 @@ const MainPage = () => {
                     </Col>
                   </Form.Group>
 
-                  {/* =============PASSWORD============= */}
-                  <Form.Group as={Row} controlId='2'>
+                  {/* =============AUTHOR PUT============= */}
+                  <Form.Group
+                    as={Row}
+                    controlId='2'
+                    onChange={handleAuthorChange}>
                     <Form.Label column md={2}>
                       Author
                     </Form.Label>
@@ -86,7 +105,7 @@ const MainPage = () => {
                     </Col>
                   </Form.Group>
 
-                  {/* =============SUBMIT============= */}
+                  {/* =============SAVE BUTTON============= */}
                   <Form.Group as={Row}>
                     <Col md={{ span: 3, offset: 10 }}>
                       <Button type='submit'>Save</Button>

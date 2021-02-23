@@ -7,22 +7,21 @@ import './styles/App.css'
 import './styles/Registration.css'
 
 const App = () => {
-  return <MainPage />
-  // return (
-  //   <Router>
-  //     <Switch>
-  //       <Route path='/registration'>
-  //         <RegistrationPage />
-  //       </Route>
-  //       <Route path='/main'>
-  //         <MainPage />
-  //       </Route>
-  //       <Route path='/'>
-  //         <LoginPage />
-  //       </Route>
-  //     </Switch>
-  //   </Router>
-  // )
+  return (
+    <Router>
+      <Switch>
+        <Route path='/registration'>
+          <RegistrationPage />
+        </Route>
+        <Route path='/main'>
+          <MainPage />
+        </Route>
+        <Route path='/'>
+          <LoginPage />
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
 
 export default App
