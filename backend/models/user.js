@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  quotes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Quote',
+    },
+  ],
 })
 
 // this reformats mongo's id and versioning field

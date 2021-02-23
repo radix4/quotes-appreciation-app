@@ -7,7 +7,7 @@ let token = null
 
 // token's value can be changed
 const setToken = (newToken) => {
-  token = newToken
+  token = `bearer ${newToken}`
 }
 
 const create = async (newObject) => {

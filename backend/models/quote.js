@@ -5,6 +5,10 @@ const quoteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  author: {
+    type: String,
+    required: true,
+  },
   date: Date,
   user: {
     type: mongoose.Schema.Types.ObjectId,

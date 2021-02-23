@@ -9,7 +9,9 @@ const middleware = require('./utils/middleware')
 
 const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
+const quotesRouter = require('./controllers/quotes')
 
+app.use('/api/quotes', quotesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
