@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Quote from './Quote'
 import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
 import quotesService from '../services/quotes'
@@ -23,8 +23,15 @@ const quotesHeader = {
 }
 
 const MainPage = () => {
+  const [quotes, setQuotes] = useState([])
   const [quote, setQuote] = useState('')
   const [author, setAuthor] = useState('')
+
+  useEffect(() => {
+    quotesService.getAll().then((initialQuotes) => {
+      setQuotes(initialQuotes)
+    })
+  }, [])
 
   const handleQuoteChange = (event) => {
     setQuote(event.target.value)
@@ -44,6 +51,7 @@ const MainPage = () => {
 
     quotesService.create(newQuote).then((returnedQuote) => {
       console.log('create new quote success!')
+      setQuotes(quotes.concat(returnedQuote))
     })
 
     setQuote('')
@@ -68,7 +76,9 @@ const MainPage = () => {
           </Row>
           <Row as={Col}>
             <Col style={{ margin: '10%' }}>
-              <Quote />
+              {quotes.map((quote, i) => (
+                <Quote key={i} quote={quote} />
+              ))}
               <Jumbotron>
                 <Form id='create-quote-form' onSubmit={saveQuote}>
                   {/* =============QUOTES INPUT============= */}
