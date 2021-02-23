@@ -11,7 +11,7 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  console.log('Finally!!!')
+  console.log('errorHandler middleware...')
   console.log(error.message)
 
   if (error.name === 'ValidationError') {

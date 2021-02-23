@@ -1,4 +1,5 @@
 const quotesRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 const User = require('../models/user') //"User" model becomes "users" collection in mongodb
 const Quote = require('../models/quote')
 
@@ -8,10 +9,27 @@ quotesRouter.get('/', (request, response) => {
   })
 })
 
+const getTokenFrom = (request) => {
+  const authorization = request.get('authorization')
+  console.log('authorization: ', authorization)
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
+
 quotesRouter.post('/', async (request, response) => {
   const body = request.body
 
-  const user = await User.findOne({ username: 'five' }) // hard code username for now
+  const token = getTokenFrom(request)
+
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  const user = await User.findById(decodedToken.id)
 
   const quote = new Quote({
     content: body.content,
