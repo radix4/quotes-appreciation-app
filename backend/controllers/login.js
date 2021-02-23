@@ -6,11 +6,10 @@ loginRouter.post('/', async (request, response) => {
   console.log('trying to login..')
   const body = request.body
 
-  // find user with same user name
-  const user = await User.findOne({ username: body.username })
+  const user = await User.findOne({ username: body.username }) // find user with same user name
+  console.log('found..')
 
-  // check for matching passwords
-  let passwordCorrect = false
+  let passwordCorrect = false // check for matching passwords
 
   console.log(body)
 
@@ -32,8 +31,7 @@ loginRouter.post('/', async (request, response) => {
     username: user.username,
   }
 
-  // sign token with jwt.sign()
-  const token = jwt.sign(userForToken, process.env.SECRET)
+  const token = jwt.sign(userForToken, process.env.SECRET) // sign token with jwt.sign()
 
   response.status(200).send({ token, username: user.username, name: user.name })
 })
