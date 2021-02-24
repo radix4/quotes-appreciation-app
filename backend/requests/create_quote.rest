@@ -1,8 +1,9 @@
 POST http://localhost:3001/api/quotes
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZpdmUiLCJpZCI6IjYwMzUyYjMxOTFlNjJlMGM5YjJmMTEyYiIsImlhdCI6MTYxNDA5NzUzOX0.oe5-Ffz0wl9Vhf0BJIkKW3pb_jYVdZoONsiN8sZmtbc
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZpdmUiLCJpZCI6IjYwMzUyYjMxOTFlNjJlMGM5YjJmMTEyYiIsImlhdCI6MTYxNDE4NzgxN30.TLKmJNrjA_s32mPmz4fyIO2ZfXwFBhFs7HWwy_82_84
 
 {
     "content": "Persistent is key to success",
-    "author": "Jiro Ono"
+    "author": "Jiro Ono",
+    "vote": 0
 }

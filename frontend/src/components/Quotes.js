@@ -3,7 +3,6 @@ import Quote from './Quote'
 
 const Quotes = ({ quotes, filterByContent }) => {
   let quotesBySearch = quotes.filter(filterByContent)
-  console.log(quotesBySearch)
 
   return (
     <div>

@@ -52,8 +52,9 @@ const MainPage = () => {
     event.preventDefault()
 
     const newQuote = {
-      quote: quote,
+      content: quote,
       author: author,
+      vote: 0,
     }
 
     quotesService.create(newQuote).then((returnedQuote) => {

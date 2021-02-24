@@ -9,6 +9,15 @@ quotesRouter.get('/', (request, response) => {
   })
 })
 
+quotesRouter.get('/:id', async (request, response) => {
+  const quote = await Quote.findById(request.params.id)
+  if (quote) {
+    response.json(quote.toJSON())
+  } else {
+    response.status(404).end()
+  }
+})
+
 const getTokenFrom = (request) => {
   const authorization = request.get('authorization')
   console.log('authorization: ', authorization)
@@ -32,8 +41,9 @@ quotesRouter.post('/', async (request, response) => {
   const user = await User.findById(decodedToken.id)
 
   const quote = new Quote({
-    content: body.quote,
+    content: body.content,
     author: body.author,
+    vote: body.vote,
     date: new Date(),
     user: user._id,
   })
@@ -42,6 +52,20 @@ quotesRouter.post('/', async (request, response) => {
   user.quotes = user.quotes.concat(savedQuote._id)
   await user.save()
   response.json(savedQuote.toJSON())
+})
+
+quotesRouter.put('/:id', (request, response, next) => {
+  const body = request.body
+
+  const quote = {
+    vote: body.vote,
+  }
+
+  Quote.findByIdAndUpdate(request.params.id, quote, { new: true })
+    .then((updatedQuote) => {
+      response.json(updatedQuote.toJSON())
+    })
+    .catch((error) => next(error))
 })
 
 module.exports = quotesRouter

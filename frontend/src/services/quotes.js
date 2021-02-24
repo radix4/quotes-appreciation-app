@@ -15,6 +15,11 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
+const get = (id) => {
+  const request = axios.get(`${baseUrl}/${id}`)
+  return request.then((response) => response.data)
+}
+
 // create quotes
 const create = async (newObject) => {
   console.log('new Object: ', newObject)
@@ -27,4 +32,10 @@ const create = async (newObject) => {
   return response.data
 }
 
-export default { setToken, getAll, create }
+// update quote
+const update = (id, newObject) => {
+  const request = axios.put(`${baseUrl}/${id}`, newObject)
+  return request.then((response) => response.data)
+}
+
+export default { setToken, getAll, create, update, get }

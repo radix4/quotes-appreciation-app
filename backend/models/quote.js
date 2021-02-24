@@ -9,6 +9,7 @@ const quoteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  vote: Number,
   date: Date,
   user: {
     type: mongoose.Schema.Types.ObjectId,

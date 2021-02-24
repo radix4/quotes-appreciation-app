@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/quotes/603692ea9aa4af32f7828d7f
+Content-Type: application/json
+
+{
+    "vote": 1
+}
