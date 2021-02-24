@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Quote from './Quote'
+import { NAME } from './LoginPage'
+import Quotes from './Quotes'
 import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
 import quotesService from '../services/quotes'
 import { Route, Redirect } from 'react-router-dom'
@@ -23,7 +24,7 @@ const MainPage = () => {
   const [quote, setQuote] = useState('')
   const [author, setAuthor] = useState('')
   const [logout, setLogout] = useState(false)
-  let name = 'Thang Cao '
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     quotesService.getAll().then((initialQuotes) => {
@@ -31,12 +32,16 @@ const MainPage = () => {
     })
   }, [])
 
-  const handleQuoteChange = (event) => {
+  const onChangeQuote = (event) => {
     setQuote(event.target.value)
   }
 
-  const handleAuthorChange = (event) => {
+  const onChangeAuthor = (event) => {
     setAuthor(event.target.value)
+  }
+
+  const onChangeSearch = (event) => {
+    setSearch(event.target.value)
   }
 
   const handleLogout = async (event) => {
@@ -61,6 +66,10 @@ const MainPage = () => {
 
     // clear react bootstrap form
     document.getElementById('create-quote-form').reset()
+  }
+
+  const filterByContent = (quote) => {
+    return quote.content.toLowerCase().indexOf(search) !== -1
   }
 
   if (logout) {
@@ -88,11 +97,27 @@ const MainPage = () => {
           <Row className='justify-content-md-center'>
             <h1 className='display-2'> Quotes</h1>
           </Row>
+
           <Row as={Col}>
             <Col style={{ margin: '10%' }}>
-              {quotes.map((quote, i) => (
-                <Quote key={i} quote={quote} />
-              ))}
+              {/* ====================== SEARCH BAR ===================== */}
+              <Form.Group controlId='search-bar' onChange={onChangeSearch}>
+                <Form.Control type='text' placeholder='Search for a quote..' />
+              </Form.Group>
+
+              {/* ====================== FILTER BUTTONS ================== */}
+              <div>
+                <Button variant='primary'>Most Votes</Button>{' '}
+                <Button variant='secondary'>Most Recent</Button>{' '}
+                <Button variant='success'>Longest</Button>{' '}
+                <Button variant='warning'>Shortest</Button>
+              </div>
+
+              <div>
+                <br></br>
+              </div>
+
+              <Quotes quotes={quotes} filterByContent={filterByContent} />
               <Jumbotron>
                 <Form id='create-quote-form' onSubmit={saveQuote}>
                   {/* =============QUOTES INPUT============= */}
@@ -100,7 +125,7 @@ const MainPage = () => {
                   <Form.Group
                     as={Row}
                     controlId='quotes-text'
-                    onChange={handleQuoteChange}>
+                    onChange={onChangeQuote}>
                     <Form.Label column md={2}>
                       Quotes
                     </Form.Label>
@@ -114,10 +139,7 @@ const MainPage = () => {
                   </Form.Group>
 
                   {/* =============AUTHOR PUT============= */}
-                  <Form.Group
-                    as={Row}
-                    controlId='2'
-                    onChange={handleAuthorChange}>
+                  <Form.Group as={Row} controlId='2' onChange={onChangeAuthor}>
                     <Form.Label column md={2}>
                       Author
                     </Form.Label>
@@ -145,7 +167,7 @@ const MainPage = () => {
           md={3}
           className='row justify-content-md-center'>
           <p className='logout-button'>
-            {name}
+            {NAME}
             <Button type='submit' onClick={handleLogout}>
               Logout
             </Button>

@@ -5,6 +5,8 @@ import background from '../images/login.png'
 import loginService from '../services/login'
 import quotesService from '../services/quotes'
 
+let NAME
+
 const LoginPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -18,11 +20,11 @@ const LoginPage = () => {
     backgroundColor: '#F0F8FF',
   }
 
-  const handleUsernameChange = (event) => {
+  const onChangeUsername = (event) => {
     setUsername(event.target.value)
   }
 
-  const handlePasswordChange = (event) => {
+  const onChangePassword = (event) => {
     setPassword(event.target.value)
   }
 
@@ -31,13 +33,13 @@ const LoginPage = () => {
 
     try {
       const user = await loginService.login({ username, password })
-      setUser(user)
       setUsername('')
       setPassword('')
       quotesService.setToken(user.token)
       document.getElementById('login-form').reset()
 
       console.log('logged in')
+      NAME = 'Thang Cao '
       setLoggedIn(true)
     } catch (exception) {
       console.log('login fail, wrong credentials')
@@ -48,7 +50,7 @@ const LoginPage = () => {
   if (loggedIn) {
     return (
       <Route exact path='/'>
-        {loggedIn ? <Redirect to='/main' /> : <LoginPage />}
+        <Redirect to='/main' />
       </Route>
     )
   }
@@ -63,7 +65,7 @@ const LoginPage = () => {
               <Form.Group
                 as={Row}
                 controlId='userName'
-                onChange={handleUsernameChange}>
+                onChange={onChangeUsername}>
                 <Form.Label column md={4}>
                   Username
                 </Form.Label>
@@ -76,7 +78,7 @@ const LoginPage = () => {
               <Form.Group
                 as={Row}
                 controlId='password'
-                onChange={handlePasswordChange}>
+                onChange={onChangePassword}>
                 <Form.Label column md={4}>
                   Password
                 </Form.Label>
@@ -106,4 +108,5 @@ const LoginPage = () => {
   )
 }
 
+export { NAME }
 export default LoginPage
