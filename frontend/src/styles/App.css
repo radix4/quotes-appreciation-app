@@ -11,3 +11,15 @@
 .jumbotron:hover .bg-overlay {
   transform: scale(1.1);
 }
+
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+}
+
+.main-page-side-text {
+  position: fixed;
+  top: 30%;
+  align-self: center;
+}

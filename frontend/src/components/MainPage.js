@@ -2,30 +2,28 @@ import React, { useState, useEffect } from 'react'
 import Quote from './Quote'
 import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
 import quotesService from '../services/quotes'
+import { Route, Redirect } from 'react-router-dom'
 
 const containerStyle = {
-  backgroundColor: '#c7f1f2',
+  backgroundColor: '#ebc1b7',
   minHeight: '940px',
 }
 
 const leftRightCols = {
-  //top: '300px',
   textAlign: 'center',
+  display: 'flex',
 }
 
 const middleCol = {
-  backgroundColor: '#ffc9b0',
   margin: '5% 0% 5% 0%',
-}
-
-const quotesHeader = {
-  font: '50px',
 }
 
 const MainPage = () => {
   const [quotes, setQuotes] = useState([])
   const [quote, setQuote] = useState('')
   const [author, setAuthor] = useState('')
+  const [logout, setLogout] = useState(false)
+  let name = 'Thang Cao '
 
   useEffect(() => {
     quotesService.getAll().then((initialQuotes) => {
@@ -39,6 +37,10 @@ const MainPage = () => {
 
   const handleAuthorChange = (event) => {
     setAuthor(event.target.value)
+  }
+
+  const handleLogout = async (event) => {
+    setLogout(true)
   }
 
   const saveQuote = (event) => {
@@ -61,15 +63,27 @@ const MainPage = () => {
     document.getElementById('create-quote-form').reset()
   }
 
+  if (logout) {
+    return (
+      <Route>
+        <Redirect to='/' />
+      </Route>
+    )
+  }
+
   return (
     <Container style={containerStyle} fluid>
       <Row>
-        <Col style={leftRightCols} md={3} className='row align-items-center'>
-          <h1 className='col align-self-center'>
+        <Col
+          style={leftRightCols}
+          md={3}
+          className='row justify-content-md-center'>
+          <h1 className='main-page-side-text'>
             Have <br></br> a quotes <br></br>that you like?
           </h1>
         </Col>
 
+        {/* ===================== MIDDLE COLUMN ================== */}
         <Col style={middleCol} md={6}>
           <Row className='justify-content-md-center'>
             <h1 className='display-2'> Quotes</h1>
@@ -126,8 +140,18 @@ const MainPage = () => {
             </Col>
           </Row>
         </Col>
-        <Col style={leftRightCols} md={3} className='row align-items-center'>
-          <h1>
+        <Col
+          style={leftRightCols}
+          md={3}
+          className='row justify-content-md-center'>
+          <p className='logout-button'>
+            {name}
+            <Button type='submit' onClick={handleLogout}>
+              Logout
+            </Button>
+          </p>
+
+          <h1 className='main-page-side-text'>
             Don't <br></br> forget to give <br></br> the authors the credits{' '}
             <br></br> they deserve!
           </h1>
