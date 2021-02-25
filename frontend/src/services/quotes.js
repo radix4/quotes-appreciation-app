@@ -10,14 +10,15 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then((response) => response.data)
+const getAll = async () => {
+  const request = await axios.get(baseUrl)
+  return request.data
 }
 
-const get = (id) => {
-  const request = axios.get(`${baseUrl}/${id}`)
-  return request.then((response) => response.data)
+const get = async (id) => {
+  const request = await axios.get(`${baseUrl}/${id}`)
+  return request.data
+  //return request.then((response) => response.data)
 }
 
 // create quotes
@@ -33,9 +34,9 @@ const create = async (newObject) => {
 }
 
 // update quote
-const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
-  return request.then((response) => response.data)
+const update = async (id, newObject) => {
+  const request = await axios.put(`${baseUrl}/${id}`, newObject)
+  return request.data
 }
 
 export default { setToken, getAll, create, update, get }

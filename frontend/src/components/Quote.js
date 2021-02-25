@@ -5,16 +5,11 @@ import quotesService from '../services/quotes'
 const Quote = ({ quote }) => {
   const [votes, setVotes] = useState(0)
 
-  useEffect(() => {
-    quotesService.get(quote.id).then((returnedQuote) => {
-      setVotes(returnedQuote.vote)
-    })
-  }, [])
+  quotesService.get(quote.id).then((returnedQuote) => {
+    setVotes(returnedQuote.vote)
+  })
 
   const handleLike = (event) => {
-    console.log(quote.id)
-    setVotes(votes + 1)
-
     const updateQuote = {
       vote: votes + 1,
     }
@@ -22,6 +17,8 @@ const Quote = ({ quote }) => {
     quotesService.update(quote.id, updateQuote).then((returnedQuote) => {
       console.log('update succeed!')
     })
+
+    setVotes(votes + 1)
   }
 
   return (

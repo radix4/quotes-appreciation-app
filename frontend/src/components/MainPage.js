@@ -32,20 +32,26 @@ const MainPage = () => {
     })
   }, [])
 
-  const onChangeQuote = (event) => {
-    setQuote(event.target.value)
-  }
+  const onChangeQuote = (event) => setQuote(event.target.value)
 
-  const onChangeAuthor = (event) => {
-    setAuthor(event.target.value)
-  }
+  const onChangeAuthor = (event) => setAuthor(event.target.value)
 
-  const onChangeSearch = (event) => {
-    setSearch(event.target.value)
-  }
+  const onChangeSearch = (event) => setSearch(event.target.value)
 
-  const handleLogout = async (event) => {
-    setLogout(true)
+  const handleLogout = (event) => setLogout(true)
+
+  const handleMostVotes = async (event) => {
+    event.preventDefault()
+    let copy
+    await quotesService.getAll().then((initialQuotes) => {
+      console.log('initial quotes: ', initialQuotes)
+      copy = initialQuotes
+    })
+
+    console.log(copy)
+
+    copy.sort((a, b) => b.vote - a.vote)
+    setQuotes(copy)
   }
 
   const saveQuote = (event) => {
@@ -108,7 +114,9 @@ const MainPage = () => {
 
               {/* ====================== FILTER BUTTONS ================== */}
               <div>
-                <Button variant='primary'>Most Votes</Button>{' '}
+                <Button variant='primary' onClick={handleMostVotes}>
+                  Most Votes
+                </Button>{' '}
                 <Button variant='secondary'>Most Recent</Button>{' '}
                 <Button variant='success'>Longest</Button>{' '}
                 <Button variant='warning'>Shortest</Button>
@@ -118,11 +126,11 @@ const MainPage = () => {
                 <br></br>
               </div>
 
+              {/* ====================== QUOTES DISPLAY ================== */}
               <Quotes quotes={quotes} filterByContent={filterByContent} />
               <Jumbotron>
                 <Form id='create-quote-form' onSubmit={saveQuote}>
                   {/* =============QUOTES INPUT============= */}
-
                   <Form.Group
                     as={Row}
                     controlId='quotes-text'
@@ -139,8 +147,11 @@ const MainPage = () => {
                     </Col>
                   </Form.Group>
 
-                  {/* =============AUTHOR PUT============= */}
-                  <Form.Group as={Row} controlId='2' onChange={onChangeAuthor}>
+                  {/* =============AUTHOR INPUT============= */}
+                  <Form.Group
+                    as={Row}
+                    controlId='author-text'
+                    onChange={onChangeAuthor}>
                     <Form.Label column md={2}>
                       Author
                     </Form.Label>
