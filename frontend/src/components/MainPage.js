@@ -3,6 +3,7 @@ import Quotes from './Quotes'
 import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
 import quotesService from '../services/quotes'
 import { Route, Redirect } from 'react-router-dom'
+import usersService from '../services/users'
 
 const containerStyle = {
   backgroundColor: '#ebc1b7',
@@ -24,6 +25,16 @@ const MainPage = () => {
   const [author, setAuthor] = useState('')
   const [logout, setLogout] = useState(false)
   const [search, setSearch] = useState('')
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      quotesService.setToken(user.token)
+    }
+  }, [])
 
   useEffect(() => {
     quotesService.getAll().then((initialQuotes) => {
@@ -37,7 +48,10 @@ const MainPage = () => {
 
   const onChangeSearch = (event) => setSearch(event.target.value)
 
-  const handleLogout = (event) => setLogout(true)
+  const handleLogout = (event) => {
+    window.localStorage.removeItem('loggedInUser')
+    setLogout(true)
+  }
 
   const handleMostVotes = async (event) => {
     let copy
