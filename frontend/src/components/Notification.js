@@ -6,6 +6,10 @@ const Notification = ({ message }) => {
     return null
   }
 
+  if (message === 'Yay, account successfully created!') {
+    return <Alert variant='success'>{message}</Alert>
+  }
+
   return <Alert variant='danger'>{message}</Alert>
 }
 

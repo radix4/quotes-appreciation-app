@@ -39,6 +39,11 @@ const RegistrationPage = () => {
         console.log('create user success!')
       })
 
+      setErrorMessage('Yay, account successfully created!')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
       setUsername('')
       setPassword('')
 
