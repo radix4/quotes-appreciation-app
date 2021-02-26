@@ -70,6 +70,16 @@ const MainPage = () => {
     setQuotes(copy)
   }
 
+  const handleMostRecent = async (event) => {
+    let copy
+    await quotesService.getAll().then((initialQuotes) => {
+      copy = initialQuotes
+    })
+
+    copy.sort((a, b) => new Date(b.date) - new Date(a.date))
+    setQuotes(copy)
+  }
+
   const saveQuote = (event) => {
     event.preventDefault() // avoid form submit to refresh the page
 
@@ -133,7 +143,9 @@ const MainPage = () => {
                 <Button variant='primary' onClick={handleMostVotes}>
                   Most Votes
                 </Button>{' '}
-                <Button variant='secondary'>Most Recent</Button>{' '}
+                <Button variant='secondary' onClick={handleMostRecent}>
+                  Most Recent
+                </Button>{' '}
                 <Button variant='success' onClick={handleLongest}>
                   Longest
                 </Button>{' '}
