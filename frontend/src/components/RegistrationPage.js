@@ -3,10 +3,12 @@ import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import background from '../images/registration.png'
 import userService from '../services/users'
+import Notification from './Notification'
 
 const RegistrationPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const rightRow = {
     padding: '30%',
@@ -24,7 +26,7 @@ const RegistrationPage = () => {
     setPassword(event.target.value)
   }
 
-  const addUser = (event) => {
+  const addUser = async (event) => {
     event.preventDefault()
 
     const user = {
@@ -32,20 +34,22 @@ const RegistrationPage = () => {
       password: password,
     }
 
-    userService.create(user).then((returnedUser) => {
-      console.log('create user success!')
-    })
+    try {
+      await userService.create(user).then((returnedUser) => {
+        console.log('create user success!')
+      })
 
-    setUsername('')
-    setPassword('')
+      setUsername('')
+      setPassword('')
 
-    // clear react bootstrap form
-    document.getElementById('create-user-form').reset()
-  }
-
-  const printStates = () => {
-    console.log('username: ', username)
-    console.log('password: ', password)
+      // clear react bootstrap form
+      document.getElementById('create-user-form').reset()
+    } catch (exception) {
+      setErrorMessage('Oh no, do not leave it blank!')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   return (
@@ -57,6 +61,7 @@ const RegistrationPage = () => {
 
         <Col>
           <Row style={rightRow}>
+            <Notification message={errorMessage} />
             <h2>Registration</h2>
             <Form id='create-user-form' onSubmit={addUser}>
               {/* =============USERNAME============= */}

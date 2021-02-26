@@ -4,11 +4,13 @@ import { Route, Link, Redirect } from 'react-router-dom'
 import background from '../images/login.png'
 import loginService from '../services/login'
 import quotesService from '../services/quotes'
+import Notification from './Notification'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const leftCol = {
     padding: '30%',
@@ -41,6 +43,10 @@ const LoginPage = () => {
       setLoggedIn(true)
     } catch (exception) {
       console.log('login fail, wrong credentials')
+      setErrorMessage('Oh no, wrong credentials!')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
       setLoggedIn(false)
     }
   }
@@ -57,6 +63,7 @@ const LoginPage = () => {
       <Row className='align-items-center'>
         <Col md={4}>
           <Row style={leftCol}>
+            <Notification message={errorMessage} />
             <h2>Login</h2>
             <Form id='login-form' onSubmit={handleLogin}>
               {/* =============USERNAME============= */}

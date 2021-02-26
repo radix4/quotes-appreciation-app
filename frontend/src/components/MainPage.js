@@ -3,7 +3,7 @@ import Quotes from './Quotes'
 import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
 import quotesService from '../services/quotes'
 import { Route, Redirect } from 'react-router-dom'
-import usersService from '../services/users'
+import Notification from './Notification'
 
 const containerStyle = {
   backgroundColor: '#ebc1b7',
@@ -26,6 +26,7 @@ const MainPage = () => {
   const [logout, setLogout] = useState(false)
   const [search, setSearch] = useState('')
   const [user, setUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
@@ -93,7 +94,7 @@ const MainPage = () => {
     setQuotes(copy)
   }
 
-  const saveQuote = (event) => {
+  const saveQuote = async (event) => {
     event.preventDefault() // avoid form submit to refresh the page
 
     const newQuote = {
@@ -102,16 +103,21 @@ const MainPage = () => {
       vote: 0,
     }
 
-    quotesService.create(newQuote).then((returnedQuote) => {
-      console.log('create new quote success!')
-      setQuotes(quotes.concat(returnedQuote))
-    })
+    try {
+      await quotesService.create(newQuote).then((returnedQuote) => {
+        console.log('create new quote success!')
+        setQuotes(quotes.concat(returnedQuote))
+      })
 
-    setQuote('')
-    setAuthor('')
-
-    // clear react bootstrap form
-    document.getElementById('create-quote-form').reset()
+      setQuote('')
+      setAuthor('')
+      document.getElementById('create-quote-form').reset()
+    } catch {
+      setErrorMessage('Oh snap, you cannot post a blank quote!')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   const filterByContent = (quote) => {
@@ -174,6 +180,7 @@ const MainPage = () => {
               {/* ====================== QUOTES DISPLAY ================== */}
               <Quotes quotes={quotes} filterByContent={filterByContent} />
               <Jumbotron>
+                <Notification message={errorMessage} />
                 <Form id='create-quote-form' onSubmit={saveQuote}>
                   {/* =============QUOTES INPUT============= */}
                   <Form.Group
@@ -181,13 +188,13 @@ const MainPage = () => {
                     controlId='quotes-text'
                     onChange={onChangeQuote}>
                     <Form.Label column md={2}>
-                      Quotes
+                      Quote
                     </Form.Label>
                     <Col md={10}>
                       <Form.Control
                         as='textarea'
                         rows={3}
-                        placeholder='e.g. "Screw it, let&apos;s do it."'
+                        placeholder='e.g. "A problem is a chance for you to do your best."'
                       />
                     </Col>
                   </Form.Group>
@@ -203,7 +210,7 @@ const MainPage = () => {
                     <Col md={10}>
                       <Form.Control
                         type='text'
-                        placeholder='e.g. Richard Branson'
+                        placeholder='e.g. Duke Ellington'
                       />
                     </Col>
                   </Form.Group>
