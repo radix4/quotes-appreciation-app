@@ -5,8 +5,6 @@ import background from '../images/login.png'
 import loginService from '../services/login'
 import quotesService from '../services/quotes'
 
-let NAME
-
 const LoginPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -39,7 +37,6 @@ const LoginPage = () => {
       document.getElementById('login-form').reset()
 
       console.log('logged in')
-      NAME = 'Thang Cao '
       setLoggedIn(true)
     } catch (exception) {
       console.log('login fail, wrong credentials')
@@ -108,5 +105,4 @@ const LoginPage = () => {
   )
 }
 
-export { NAME }
 export default LoginPage

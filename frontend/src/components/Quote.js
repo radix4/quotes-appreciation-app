@@ -7,21 +7,23 @@ const Quote = ({ quote }) => {
   const [votes, setVotes] = useState(0)
   const [username, setUsername] = useState('')
 
+  useEffect(() => {
+    usersService.get(quote.user).then((returnedUser) => {
+      setUsername(returnedUser.username)
+    })
+  }, [])
+
   quotesService.get(quote.id).then((returnedQuote) => {
     setVotes(returnedQuote.vote)
   })
 
-  usersService.get(quote.user).then((returnedUser) => {
-    setUsername(returnedUser.username)
-  })
-
-  const handleLike = (event) => {
+  const handleLike = async (event) => {
     const updateQuote = {
       vote: votes + 1,
     }
 
-    quotesService.update(quote.id, updateQuote).then((returnedQuote) => {
-      console.log('update succeed!')
+    await quotesService.update(quote.id, updateQuote).then((returnedQuote) => {
+      console.log('vote success')
     })
 
     setVotes(votes + 1)
@@ -36,7 +38,7 @@ const Quote = ({ quote }) => {
       <Row>
         <Col>
           <Button onClick={handleLike}>
-            <i className='fa fa-thumbs-up thumbs-up-button'> {' ' + votes}</i>
+            <i className='fa fa-thumbs-up thumbs-up-button'>{' ' + votes}</i>
           </Button>
         </Col>
         <Col className='text-right'>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { NAME } from './LoginPage'
 import Quotes from './Quotes'
 import { Col, Row, Container, Form, Button, Jumbotron } from 'react-bootstrap'
 import quotesService from '../services/quotes'
@@ -211,7 +210,6 @@ const MainPage = () => {
           md={3}
           className='row justify-content-md-center'>
           <p className='logout-button'>
-            {NAME}
             <Button type='submit' onClick={handleLogout}>
               Logout
             </Button>
