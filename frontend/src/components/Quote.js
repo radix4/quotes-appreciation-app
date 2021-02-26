@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Jumbotron, Button } from 'react-bootstrap'
+import { Jumbotron, Button, Col, Row } from 'react-bootstrap'
 import quotesService from '../services/quotes'
+import usersService from '../services/users'
 
 const Quote = ({ quote }) => {
   const [votes, setVotes] = useState(0)
+  const [username, setUsername] = useState('')
 
   quotesService.get(quote.id).then((returnedQuote) => {
     setVotes(returnedQuote.vote)
+  })
+
+  usersService.get(quote.user).then((returnedUser) => {
+    setUsername(returnedUser.username)
   })
 
   const handleLike = (event) => {
@@ -27,9 +33,18 @@ const Quote = ({ quote }) => {
         <p>{quote.content}</p>
         <h3 className='text-right'>{quote.author}</h3>
       </div>
-      <Button onClick={handleLike}>
-        <i className='fa fa-thumbs-up thumbs-up-button'> {' ' + votes}</i>
-      </Button>
+      <Row>
+        <Col>
+          <Button onClick={handleLike}>
+            <i className='fa fa-thumbs-up thumbs-up-button'> {' ' + votes}</i>
+          </Button>
+        </Col>
+        <Col className='text-right'>
+          <i className='quote-user-postdate'>
+            Posted by <b>{username}</b> on {quote.date.substring(0, 10)}
+          </i>
+        </Col>
+      </Row>
     </Jumbotron>
   )
 }

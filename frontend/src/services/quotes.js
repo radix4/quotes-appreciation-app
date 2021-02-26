@@ -18,7 +18,6 @@ const getAll = async () => {
 const get = async (id) => {
   const request = await axios.get(`${baseUrl}/${id}`)
   return request.data
-  //return request.then((response) => response.data)
 }
 
 // create quotes

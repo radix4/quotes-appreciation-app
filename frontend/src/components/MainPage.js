@@ -41,21 +41,37 @@ const MainPage = () => {
   const handleLogout = (event) => setLogout(true)
 
   const handleMostVotes = async (event) => {
-    event.preventDefault()
     let copy
     await quotesService.getAll().then((initialQuotes) => {
-      console.log('initial quotes: ', initialQuotes)
       copy = initialQuotes
     })
-
-    console.log(copy)
 
     copy.sort((a, b) => b.vote - a.vote)
     setQuotes(copy)
   }
 
+  const handleLongest = async (event) => {
+    let copy
+    await quotesService.getAll().then((initialQuotes) => {
+      copy = initialQuotes
+    })
+
+    copy.sort((a, b) => b.content.length - a.content.length)
+    setQuotes(copy)
+  }
+
+  const handleShortest = async (event) => {
+    let copy
+    await quotesService.getAll().then((initialQuotes) => {
+      copy = initialQuotes
+    })
+
+    copy.sort((a, b) => a.content.length - b.content.length)
+    setQuotes(copy)
+  }
+
   const saveQuote = (event) => {
-    event.preventDefault()
+    event.preventDefault() // avoid form submit to refresh the page
 
     const newQuote = {
       content: quote,
@@ -118,8 +134,12 @@ const MainPage = () => {
                   Most Votes
                 </Button>{' '}
                 <Button variant='secondary'>Most Recent</Button>{' '}
-                <Button variant='success'>Longest</Button>{' '}
-                <Button variant='warning'>Shortest</Button>
+                <Button variant='success' onClick={handleLongest}>
+                  Longest
+                </Button>{' '}
+                <Button variant='warning' onClick={handleShortest}>
+                  Shortest
+                </Button>
               </div>
 
               <div>

@@ -10,9 +10,9 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
 
-const getAllQuotes = () => {
-  const request = axios.get(baseUrl)
-  return request.then((response) => response.data)
+const get = async (id) => {
+  const request = await axios.get(`${baseUrl}/${id}`)
+  return request.data
 }
 
 // create users
@@ -26,4 +26,4 @@ const create = async (newObject) => {
   return response.data
 }
 
-export default { create, setToken, getAllQuotes }
+export default { create, setToken, get }

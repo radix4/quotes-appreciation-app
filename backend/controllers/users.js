@@ -8,6 +8,15 @@ usersRouter.get('/', (request, response) => {
   })
 })
 
+usersRouter.get('/:id', async (request, response) => {
+  const user = await User.findById(request.params.id)
+  if (user) {
+    response.json(user.toJSON())
+  } else {
+    response.status(404).end()
+  }
+})
+
 // create user with express.post() method
 usersRouter.post('/', async (request, response) => {
   const body = request.body
