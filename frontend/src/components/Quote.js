@@ -7,11 +7,9 @@ const Quote = ({ quote }) => {
   const [votes, setVotes] = useState(0)
   const [username, setUsername] = useState('')
 
-  useEffect(() => {
-    usersService.get(quote.user).then((returnedUser) => {
-      setUsername(returnedUser.username)
-    })
-  }, [])
+  usersService.get(quote.user).then((returnedUser) => {
+    setUsername(returnedUser.username)
+  })
 
   quotesService.get(quote.id).then((returnedQuote) => {
     setVotes(returnedQuote.vote)
