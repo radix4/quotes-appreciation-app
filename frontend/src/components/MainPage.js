@@ -34,6 +34,7 @@ const MainPage = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       quotesService.setToken(user.token)
+      console.log(user)
     }
   }, [])
 
@@ -216,14 +217,16 @@ const MainPage = () => {
               </Jumbotron>
             </Col>
           </Row>
-
-          {/* ======= LOGOUT BUTTON ======== */}
-          <p className='logout-button'>
-            <Button type='submit' onClick={handleLogout}>
-              Logout
-            </Button>
-          </p>
         </Col>
+        {/* ======= LOGOUT BUTTON ======== */}
+        <p className='logout-button'>
+          <>
+            Hello <b>{user.username}</b>{' '}
+          </>
+          <Button type='submit' onClick={handleLogout}>
+            Logout
+          </Button>
+        </p>
       </Row>
     </Container>
   )
