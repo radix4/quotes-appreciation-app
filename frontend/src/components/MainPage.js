@@ -134,16 +134,7 @@ const MainPage = () => {
 
   return (
     <Container style={containerStyle} fluid>
-      <Row>
-        <Col
-          style={leftRightCols}
-          md={3}
-          className='row justify-content-md-center'>
-          <h1 className='main-page-side-text'>
-            Have <br></br> a quotes <br></br>that you like?
-          </h1>
-        </Col>
-
+      <Row className='row justify-content-md-center'>
         {/* ===================== MIDDLE COLUMN ================== */}
         <Col style={middleCol} md={6}>
           <Row className='justify-content-md-center'>
@@ -225,21 +216,13 @@ const MainPage = () => {
               </Jumbotron>
             </Col>
           </Row>
-        </Col>
-        <Col
-          style={leftRightCols}
-          md={3}
-          className='row justify-content-md-center'>
+
+          {/* ======= LOGOUT BUTTON ======== */}
           <p className='logout-button'>
             <Button type='submit' onClick={handleLogout}>
               Logout
             </Button>
           </p>
-
-          <h1 className='main-page-side-text'>
-            Don't <br></br> forget to give <br></br> the authors the credits{' '}
-            <br></br> they deserve!
-          </h1>
         </Col>
       </Row>
     </Container>

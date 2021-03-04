@@ -18,12 +18,6 @@
   right: 5px;
 }
 
-.main-page-side-text {
-  position: fixed;
-  top: 30%;
-  align-self: center;
-}
-
 .thumbs-up-button {
   font-size: 24px;
 }
@@ -31,6 +25,6 @@
 .quote-user-postdate {
   position: relative;
   right: 0px;
-  top: 50px;
+  top: 25px;
   font-size: small;
 }

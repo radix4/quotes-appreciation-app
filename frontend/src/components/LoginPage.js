@@ -61,6 +61,7 @@ const LoginPage = () => {
   return (
     <Container style={container} fluid>
       <Row className='align-items-center'>
+        {/* =================RIGHT COLUMN================ */}
         <Col md={4}>
           <Row style={leftCol}>
             <Notification message={errorMessage} />
@@ -72,7 +73,7 @@ const LoginPage = () => {
                 controlId='userName'
                 onChange={onChangeUsername}>
                 <Form.Label column md={4}>
-                  Username
+                  Name
                 </Form.Label>
                 <Col md={8}>
                   <Form.Control type='text' placeholder='Username' />

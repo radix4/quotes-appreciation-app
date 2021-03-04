@@ -59,13 +59,15 @@ const RegistrationPage = () => {
 
   return (
     <Container style={container} fluid>
-      <Row>
-        <Col className='left-col'>
+      <Row className='align-items-center d-flex flex-wrap-reverse'>
+        {/* =================LEFT COLUMN================ */}
+        <Col className='left-col' md={6}>
           <Image className='background-img' src={background}></Image>
         </Col>
 
+        {/* =================RIGHT COLUMN================ */}
         <Col>
-          <Row style={rightRow}>
+          <Row style={rightRow} md={6}>
             <Notification message={errorMessage} />
             <h2>Registration</h2>
             <Form id='create-user-form' onSubmit={addUser}>
@@ -75,7 +77,7 @@ const RegistrationPage = () => {
                 controlId='userName'
                 onChange={handleUsernameChange}>
                 <Form.Label column md={4}>
-                  Username
+                  Name
                 </Form.Label>
                 <Col md={8}>
                   <Form.Control type='text' placeholder='Username' />
