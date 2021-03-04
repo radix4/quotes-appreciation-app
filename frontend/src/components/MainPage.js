@@ -125,6 +125,21 @@ const MainPage = () => {
     return quote.content.toLowerCase().indexOf(search) !== -1
   }
 
+  const displayLogoutBtn = () => {
+    if (user) {
+      return (
+        <div className='logout-button'>
+          <>
+            Hello <b>{user.username}</b>{' '}
+          </>{' '}
+          <Button type='submit' onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
+      )
+    }
+  }
+
   if (logout) {
     return (
       <Route>
@@ -219,14 +234,7 @@ const MainPage = () => {
           </Row>
         </Col>
         {/* ======= LOGOUT BUTTON ======== */}
-        <p className='logout-button'>
-          <>
-            Hello <b>{user.username}</b>{' '}
-          </>
-          <Button type='submit' onClick={handleLogout}>
-            Logout
-          </Button>
-        </p>
+        {displayLogoutBtn()}
       </Row>
     </Container>
   )
